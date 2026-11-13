@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container bg-light shadow-md p-5 form-layout">
@@ -7,7 +8,7 @@
     <hr>
     <form method="POST" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit" class="btn btn-outline-primary">Create</button>
     </form>
 </div>
