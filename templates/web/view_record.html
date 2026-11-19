@@ -10,5 +10,6 @@
     <p><strong>Weight: </strong> {{record.weight}}</p>
     <p><strong>Created At: </strong> {{record.created_at}}</p>
     <a href="{% url 'update_record' record.id %}" class="btn btn-outline-primary">Update Record</a>
+    <a href="{% url 'delete_record' record.id %}" class="btn btn-outline-danger">Delete Record</a>
 </div>
 {% endblock %}
