@@ -13,10 +13,10 @@ class Category(models.Model):
 class Record(models.Model):
     first_name = models.CharField(max_length=250)
     last_name = models.CharField(max_length=250)
-    Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     phone = models.IntegerField()
     tall = models.IntegerField()
-    wedigth = models.IntegerField()
+    weight = models.IntegerField()
     address = models.CharField(max_length=500)
     created_at = models.DateField(auto_now_add=True)
 
