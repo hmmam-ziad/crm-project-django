@@ -9,5 +9,6 @@
     <p><strong>Tall: </strong> {{record.tall}}</p>
     <p><strong>Weight: </strong> {{record.weight}}</p>
     <p><strong>Created At: </strong> {{record.created_at}}</p>
+    <a href="{% url 'update_record' record.id %}" class="btn btn-outline-primary">Update Record</a>
 </div>
 {% endblock %}

@@ -9,4 +9,5 @@ urlpatterns = [
     path('logout/', views.my_logout, name='logout'),
     path('create-record/', views.create_record, name='create_record'),
     path('view-record/<int:record_id>/', views.view_record, name='view_record'),
+    path('update-record/<int:record_id>/', views.update_record, name='update_record'),
 ]
