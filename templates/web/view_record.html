@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="cart">
+    <h2>{{record.first_name|capfirst}} {{record.last_name}}</h2>
+    <p><strong>ID: </strong> {{record.id}}</p>
+    <p><strong>Category: </strong> {{record.category}}</p>
+    <p><strong>Phone: </strong> {{record.phone}}</p>
+    <p><strong>Address: </strong> {{record.address}}</p>
+    <p><strong>Tall: </strong> {{record.tall}}</p>
+    <p><strong>Weight: </strong> {{record.weight}}</p>
+    <p><strong>Created At: </strong> {{record.created_at}}</p>
+</div>
+{% endblock %}

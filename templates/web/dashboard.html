@@ -19,6 +19,7 @@
                 <th scope="col">Tall</th>
                 <th scope="col">weight</th>
                 <th scope="col">Created Date</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,9 @@
                 <td>{{ record.tall }}</td>
                 <td>{{ record.weight }}</td>
                 <td>{{ record.created_at }}</td>
+                <td>
+                    <a href="{% url 'view_record' record.id %}" class="btn btn-outline-warning">View</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

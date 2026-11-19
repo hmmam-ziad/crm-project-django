@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateUserForm, LoginForm, CreateRecordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,6 @@ from .models import Record
 # Create your views here.
 def index(request):
     return render(request, 'web/index.html')
-
 
 def register(request):
     form = CreateUserForm()
@@ -61,3 +60,8 @@ def create_record(request):
 
     context = {'form': form}
     return render(request, 'web/create_record.html', context)
+
+@login_required(login_url='login')
+def view_record(request, record_id):
+    record = get_object_or_404(Record, id=record_id)
+    return render(request, 'web/view_record.html', {'record': record})
