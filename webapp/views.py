@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Record
 from django.db.models import Q
 import logging
+from django.contrib import messages
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -17,6 +18,7 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Account created successfully!")
             return redirect('login')
     else:
         form = CreateUserForm()
@@ -34,6 +36,7 @@ def my_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                messages.success(request, "Logged in successfully!")
                 return redirect('dashboard')
     else:
         form = LoginForm()
@@ -48,6 +51,7 @@ def dashboard(request):
 
 def my_logout(request):
     logout(request)
+    messages.success(request, "Logged out successfully!")
     return redirect('login')
 
 @login_required(login_url='login')
@@ -57,6 +61,7 @@ def create_record(request):
         form = CreateRecordForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Record created successfully!")
             return redirect('dashboard')
     else:
         form = CreateRecordForm()
@@ -77,6 +82,7 @@ def update_record(request, record_id):
         form = UpdateRecordForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
+            messages.success(request, "Record updated successfully!")
             return redirect('dashboard')
     else:
         form = UpdateRecordForm(instance=record)
@@ -88,15 +94,22 @@ def update_record(request, record_id):
 def delete_record(request, record_id):
     record = get_object_or_404(Record, id=record_id)
     record.delete()
+    messages.success(request, "Record deleted successfully!")
     return redirect('dashboard')
 
 @login_required(login_url='login')
 def search_records(request):
-    query = request.GET.get('query')
-    try:
-        if query:
-                records = Record.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(id__icontains=query) | Q(phone_number__icontains=query))
-    except Exception as e:
-        logger.error("Error occurred while searching records: %s", str(e))
-        records = Record.objects.none()
+    query = request.GET.get('query', '').strip()
+    records = Record.objects.none()
+
+    if query:
+        try:
+            records = Record.objects.filter(
+                Q(first_name__icontains=query)
+                | Q(last_name__icontains=query)
+                | Q(phone__icontains=query)
+            )
+        except Exception as e:
+            logger.error("Error occurred while searching records: %s", str(e))
+
     return render(request, 'web/search_results.html', {'records': records, 'query': query})

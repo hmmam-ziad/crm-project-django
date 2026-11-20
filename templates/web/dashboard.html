@@ -4,6 +4,7 @@
     <h1>Welcome to the Django CRM <b>{{user.username}}</b></h1>
     <hr style="border: 1px solid #000; margin: 30px 150px;">
     <a href="{% url 'create_record' %}" class="btn btn-outline-primary">Create Record</a>
+    {% include 'components/alert.html' %}
     <div class="text-center">
         <form method="GET" action="{% url 'search_records' %}">
             <div class="input-group mb-3">
