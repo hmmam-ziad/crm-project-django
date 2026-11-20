@@ -1,50 +1,30 @@
 {% extends 'base.html' %}
+
+{% block title %}Search results &middot; Django CRM{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h1>Search Results</h1>
-    <p>Showing results for: "{{ query }}"</p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Address</th>
-                <th scope="col">Tall</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Created Date</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if records %}
-            {% for record in records %}
-            <tr>
-                <th scope="row">{{ record.id }}</th>
-                <td>{{ record.first_name }}</td>
-                <td>{{ record.last_name }}</td>
-                <td>{{ record.category }}</td>
-                <td>{{ record.phone }}</td>
-                <td>{{ record.address }}</td>
-                <td>{{ record.tall }}</td>
-                <td>{{ record.weight }}</td>
-                <td>{{ record.created_at }}</td>
-                <td>
-                    <a href="{% url 'view_record' record.id %}" class="btn btn-outline-warning">View</a>
-                    <a href="{% url 'update_record' record.id %}" class="btn btn-outline-primary">Update</a>
-                    <a href="{% url 'delete_record' record.id %}" class="btn btn-outline-danger">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-                <td colspan="10" class="text-center">No records found.</td>
-            </tr>
-            {% endif %}
-        </tbody>
-    </table>
-    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+<div class="container page">
+    <div class="page-header">
+        <div>
+            <h1>Search results</h1>
+            <p>{{ records|length }} result{{ records|length|pluralize }} for <strong class="text-dark">&ldquo;{{ query
+                    }}&rdquo;</strong></p>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-soft"><i class="bi bi-arrow-left me-1"></i> Back to
+            dashboard</a>
+    </div>
+
+    <div class="surface overflow-hidden">
+        <div class="toolbar">
+            <form method="GET" action="{% url 'search_records' %}" class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="search" class="form-control" placeholder="Search records..." name="query"
+                    value="{{ query }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+
+        {% include 'components/records_table.html' %}
+    </div>
 </div>
 {% endblock %}

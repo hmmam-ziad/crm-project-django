@@ -1,0 +1,60 @@
+{# Reusable records table. Expects `records` in the context. #}
+{% if records %}
+<div class="table-wrap">
+    <table class="table records-table">
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Category</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Created</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td class="td-member" data-label="Member">
+                    <div class="member">
+                        <span class="avatar">{{ record.first_name|slice:":1" }}</span>
+                        <div>
+                            <div class="name">{{ record.first_name|capfirst }} {{ record.last_name|capfirst }}</div>
+                            <div class="sub">ID #{{ record.id }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td data-label="Category"><span class="badge-soft">{{ record.category }}</span></td>
+                <td data-label="Phone"><a href="tel:{{ record.phone }}" class="text-body">{{ record.phone }}</a></td>
+                <td data-label="Address"><span class="cell-address" title="{{ record.address }}">{{ record.address
+                        }}</span></td>
+                <td data-label="Height">{{ record.tall }}</td>
+                <td data-label="Weight">{{ record.weight }}</td>
+                <td data-label="Created">{{ record.created_at|date:"M d, Y" }}</td>
+                <td class="td-actions" data-label="Actions">
+                    <div class="actions">
+                        <a href="{% url 'view_record' record.id %}" class="btn-icon view" title="View"
+                            aria-label="View"><i class="bi bi-eye"></i></a>
+                        <a href="{% url 'update_record' record.id %}" class="btn-icon edit" title="Edit"
+                            aria-label="Edit"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'delete_record' record.id %}" class="btn-icon del" title="Delete"
+                            aria-label="Delete" data-delete
+                            data-name="{{ record.first_name|capfirst }} {{ record.last_name|capfirst }}"><i
+                                class="bi bi-trash3"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty">
+    <div class="icon"><i class="bi bi-inbox"></i></div>
+    <h5>No records found</h5>
+    <p>There is nothing to show here yet.</p>
+    <a href="{% url 'create_record' %}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Create record</a>
+</div>
+{% endif %}

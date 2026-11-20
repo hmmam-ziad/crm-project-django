@@ -1,18 +1,53 @@
 {% extends 'base.html' %}
 
+{% block title %}Django CRM &mdash; Manage your records{% endblock %}
+
 {% block content %}
-<div class="text-center">
-    <br><br><br>
-    <h1>Django - CRM ... Management at is's finest</h1>
-    <br>
-    <h5><b>Track Of Your Records Effectivly</b></h5>
-    <hr style="border: 1px solid #000; margin: 30px 150px;">
+<section class="hero">
+    <div class="container">
+        <span class="eyebrow"><i class="bi bi-stars"></i> Simple, fast, organized</span>
+        <h1>Manage your records <span class="grad">effortlessly</span></h1>
+        <p class="lead">Keep every member's details in one place. Create, search and update records in seconds, from any
+            device.</p>
 
-    {% if user.is_authenticated %}
-    <a href="{% url 'dashboard' %}" class="btn btn-outline-primary">My Dashboard</a>
-    {% else %}
-    <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a>
-    {% endif %}
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg"><i class="bi bi-grid-1x2 me-2"></i>Open
+                dashboard</a>
+            <a href="{% url 'create_record' %}" class="btn btn-outline-soft btn-lg"><i
+                    class="bi bi-plus-lg me-2"></i>New record</a>
+            {% else %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg"><i class="bi bi-rocket-takeoff me-2"></i>Get
+                started</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-soft btn-lg">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
-</div>
+<section class="container pb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="surface feature">
+                <div class="icon-box"><i class="bi bi-person-lines-fill"></i></div>
+                <h5>Organized records</h5>
+                <p>Name, category, contact, height and weight, all neatly stored and easy to read.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="surface feature">
+                <div class="icon-box"><i class="bi bi-search"></i></div>
+                <h5>Instant search</h5>
+                <p>Find any record in a moment with the built-in search from your dashboard.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="surface feature">
+                <div class="icon-box"><i class="bi bi-phone"></i></div>
+                <h5>Works everywhere</h5>
+                <p>A fully responsive layout that looks great on phones, tablets and desktops.</p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -1,23 +1,44 @@
-<div class="message-container text-center">
-    {% if messages %}
-    {% for message in messages %}
-    <div id="message" class="container">
-        <div {% if message.tags %}class="alert alert-{{ message.tags }}" {% endif %} role="alert">
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
-            <h5><b>{{ message }}</b></h5>
+<nav class="navbar navbar-expand-lg app-navbar">
+    <div class="container">
+        <a class="navbar-brand brand m-0" href="{% url 'home' %}">
+            <span class="brand-logo"><i class="bi bi-people-fill"></i></span>
+            Django CRM
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto ms-lg-3 gap-lg-1">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                        href="{% url 'home' %}"><i class="bi bi-house-door"></i> Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+                        href="{% url 'dashboard' %}"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <div class="nav-actions d-flex align-items-lg-center flex-column flex-lg-row gap-2">
+                {% if user.is_authenticated %}
+                <span class="user-chip">
+                    <span class="avatar avatar-sm">{{ user.username|slice:":1" }}</span>
+                    {{ user.username }}
+                </span>
+                <a class="btn btn-outline-soft" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-1"></i>
+                    Logout</a>
+                {% else %}
+                <a class="btn btn-outline-soft" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>
+                    Login</a>
+                <a class="btn btn-primary" href="{% url 'register' %}"><i class="bi bi-person-plus me-1"></i>
+                    Register</a>
+                {% endif %}
+            </div>
         </div>
     </div>
-    {% endfor %}
-    {% endif %}
-</div>
-
-
-
-<script>
-
-    $(document).ready(function () {
-        setTimeout(function () {
-            $('.container').fadeOut('slow');
-        }, 3000);
-    });
-</script>
+</nav>

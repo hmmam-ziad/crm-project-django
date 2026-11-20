@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-<div class="container bg-light shadow-md p-5 form-layout">
-    <h1>Create your account</h1>
+{% block title %}Register &middot; Django CRM{% endblock %}
 
-    <hr>
-    <form method="POST" autocomplete="off">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-outline-primary">Create</button>
-    </form>
+{% block content %}
+<div class="container auth-wrap">
+    <div class="surface auth-card">
+        <div class="text-center mb-4">
+            <div class="icon-box mx-auto mb-3"><i class="bi bi-person-plus"></i></div>
+            <h1 class="h3 mb-1">Create your account</h1>
+            <p class="text-secondary mb-0">It only takes a minute to get started.</p>
+        </div>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary w-100 mt-2 py-2">Create account</button>
+        </form>
+
+        <p class="text-center text-secondary mt-4 mb-0">
+            Already have an account? <a href="{% url 'login' %}" class="fw-semibold">Login</a>
+        </p>
+    </div>
 </div>
 {% endblock %}

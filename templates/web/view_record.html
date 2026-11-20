@@ -1,15 +1,54 @@
 {% extends 'base.html' %}
+
+{% block title %}{{ record.first_name|capfirst }} {{ record.last_name|capfirst }} &middot; Django CRM{% endblock %}
+
 {% block content %}
-<div class="cart">
-    <h2>{{record.first_name|capfirst}} {{record.last_name}}</h2>
-    <p><strong>ID: </strong> {{record.id}}</p>
-    <p><strong>Category: </strong> {{record.category}}</p>
-    <p><strong>Phone: </strong> {{record.phone}}</p>
-    <p><strong>Address: </strong> {{record.address}}</p>
-    <p><strong>Tall: </strong> {{record.tall}}</p>
-    <p><strong>Weight: </strong> {{record.weight}}</p>
-    <p><strong>Created At: </strong> {{record.created_at}}</p>
-    <a href="{% url 'update_record' record.id %}" class="btn btn-outline-primary">Update Record</a>
-    <a href="{% url 'delete_record' record.id %}" class="btn btn-outline-danger">Delete Record</a>
+<div class="container page" style="max-width: 820px;">
+    <a href="{% url 'dashboard' %}" class="d-inline-flex align-items-center gap-1 text-secondary fw-semibold mb-3">
+        <i class="bi bi-arrow-left"></i> Back to dashboard
+    </a>
+
+    <div class="surface">
+        <div class="profile-head">
+            <span class="avatar avatar-xl">{{ record.first_name|slice:":1" }}</span>
+            <div>
+                <h2>{{ record.first_name|capfirst }} {{ record.last_name|capfirst }}</h2>
+                <span class="badge-soft">{{ record.category }}</span>
+                <span class="text-secondary ms-2 small">ID #{{ record.id }}</span>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="icon-box"><i class="bi bi-telephone"></i></div>
+                <div><small>Phone</small><b><a href="tel:{{ record.phone }}" class="text-reset">{{ record.phone
+                            }}</a></b></div>
+            </div>
+            <div class="info-item">
+                <div class="icon-box"><i class="bi bi-geo-alt"></i></div>
+                <div><small>Address</small><b>{{ record.address }}</b></div>
+            </div>
+            <div class="info-item">
+                <div class="icon-box"><i class="bi bi-arrows-vertical"></i></div>
+                <div><small>Height</small><b>{{ record.tall }}</b></div>
+            </div>
+            <div class="info-item">
+                <div class="icon-box"><i class="bi bi-speedometer2"></i></div>
+                <div><small>Weight</small><b>{{ record.weight }}</b></div>
+            </div>
+            <div class="info-item" style="grid-column: 1 / -1;">
+                <div class="icon-box"><i class="bi bi-calendar-event"></i></div>
+                <div><small>Created</small><b>{{ record.created_at|date:"F d, Y" }}</b></div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'update_record' record.id %}" class="btn btn-primary"><i
+                    class="bi bi-pencil-square me-1"></i> Edit record</a>
+            <a href="{% url 'delete_record' record.id %}" class="btn btn-outline-danger" data-delete
+                data-name="{{ record.first_name|capfirst }} {{ record.last_name|capfirst }}"><i
+                    class="bi bi-trash3 me-1"></i> Delete</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
