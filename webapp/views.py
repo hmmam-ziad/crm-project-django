@@ -113,3 +113,6 @@ def search_records(request):
             logger.error("Error occurred while searching records: %s", str(e))
 
     return render(request, 'web/search_results.html', {'records': records, 'query': query})
+
+def handle_404(request, exception):
+    return render(request, 'web/404.html', status=404)
