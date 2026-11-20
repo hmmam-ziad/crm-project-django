@@ -2,8 +2,17 @@
 {% block content %}
 <div>
     <h1>Welcome to the Django CRM <b>{{user.username}}</b></h1>
-    <hr style="border: 1px solid #000; margin: 30px, 150px;">
+    <hr style="border: 1px solid #000; margin: 30px 150px;">
     <a href="{% url 'create_record' %}" class="btn btn-outline-primary">Create Record</a>
+    <div class="text-center">
+        <form method="GET" action="{% url 'search_records' %}">
+            <div class="input-group mb-3">
+                <input type="search" class="form-control" placeholder="Search records..." name="query"
+                    value="{{ request.GET.query }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="text-center">
